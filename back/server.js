@@ -1,18 +1,40 @@
-// Express와 Mongoose 라이브러리를 import합니다.
 const express = require("express");
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
-const cors = require("cors"); // CORS 라이브러리를 가져옵니다.
-const weather_API_KEY =
-  // MongoDB와 연결합니다. 여기서 "board"는 데이터베이스의 이름입니다.
-  mongoose.connect("mongodb://127.0.0.1:27017/dashboard", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-let db = mongoose.connection;
+const cors = require("cors");
+const scrapeYes24 = require("./yes24/scrapping"); // YES24 스크래핑 함수
+const saveCocktailToDB = require("./cocktail/cocktail"); // 칵테일 정보 저장 함수
 
-// 위에서 정의한 스키마를 이용해 MongoDB에 'board'라는 이름의 컬렉션을 생성합니다. 이 컬렉션에 접근할 때는 'Club' 모델을 사용합니다.
-const Club = mongoose.model("boards", clubSchema);
+const app = express();
+app.use(cors());
 
-// 3001 포트에서 서버를 시작합니다.
 app.listen(3001, () => console.log("Server listening on port 3001"));
+
+// 서버 시작과 동시에 YES24 스크래핑을 실행
+scrapeYes24();
+
+// 서버 시작과 동시에 랜덤 칵테일 정보를 가져와 MongoDB에 저장
+saveCocktailToDB();
+
+// YES24 베스트셀러 정보를 반환하는 API
+app.get("/books", async (req, res) => {
+  try {
+    // 모든 책 데이터를 가져옵니다.
+    const books = await Book.find();
+    res.json(books);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// 저장된 칵테일 정보를 반환하는 API
+app.get("/cocktails", async (req, res) => {
+  try {
+    // 모든 칵테일 데이터를 가져옵니다.
+    const cocktails = await Cocktail.find();
+    res.json(cocktails);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+});

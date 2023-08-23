@@ -60,7 +60,7 @@ async function saveCocktailToDB() {
   const newCocktail = new Cocktail(cocktail);
   await newCocktail.save();
 
-  console.log("Cocktail saved successfully!");
+  console.log("Cocktail: Data saved successfully!");
 }
 
-module.exports = saveCocktailToDB;
+module.exports = { Cocktail, saveCocktailToDB };

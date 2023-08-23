@@ -1,10 +1,12 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
-const scrapeYes24 = require("./yes24/scrapping"); // YES24 스크래핑 함수
-const saveCocktailToDB = require("./cocktail/cocktail"); // 칵테일 정보 저장 함수
+const mongoose = require("mongoose");
+const { Book, scrapeYes24 } = require("./yes24/scrapping"); // YES24 스크래핑 함수
+const { Cocktail, saveCocktailToDB } = require("./cocktail/cocktail"); // 칵테일 정보 저장 함수
+const { Soccer, scrapeAndSaveData } = require("./soccer/soccer");
 
 const app = express();
+app.use(express.json());
 app.use(cors());
 
 app.listen(3001, () => console.log("Server listening on port 3001"));
@@ -14,6 +16,9 @@ scrapeYes24();
 
 // 서버 시작과 동시에 랜덤 칵테일 정보를 가져와 MongoDB에 저장
 saveCocktailToDB();
+
+// 서버 시작과 동시에 축구 정보를 가져와 MongoDB에 저장
+scrapeAndSaveData();
 
 // YES24 베스트셀러 정보를 반환하는 API
 app.get("/books", async (req, res) => {
@@ -33,6 +38,18 @@ app.get("/cocktails", async (req, res) => {
     // 모든 칵테일 데이터를 가져옵니다.
     const cocktails = await Cocktail.find();
     res.json(cocktails);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Server Error");
+  }
+});
+
+// 축구 정보를 반환하는 API
+app.get("/soccer", async (req, res) => {
+  try {
+    // 모든 축구 데이터를 가져옵니다.
+    const soccer = await Soccer.find();
+    res.json(soccer);
   } catch (error) {
     console.log(error);
     res.status(500).send("Server Error");

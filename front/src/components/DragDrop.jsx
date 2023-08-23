@@ -2,27 +2,30 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Weather from "./Weather";
+import Book from "./Book";
+import Cocktail from "./Cocktail";
+import Soccer from "./Soccer";
 
 const initialSections = {
   "section-1": {
     id: "section-1",
     title: "Section 1",
-    items: [{ id: "item-1", content: <Weather /> }],
+    items: [{ id: "item-1", content: <Book /> }],
   },
   "section-2": {
     id: "section-2",
     title: "Section 2",
-    items: [{ id: "item-2", content: "Item 2" }],
+    items: [{ id: "item-2", content: <Weather /> }],
   },
   "section-3": {
     id: "section-3",
     title: "Section 3",
-    items: [{ id: "item-3", content: "Item 3" }],
+    items: [{ id: "item-3", content: <Cocktail /> }],
   },
   "section-4": {
     id: "section-4",
     title: "Section 4",
-    items: [{ id: "item-4", content: "Item 4" }],
+    items: [{ id: "item-4", content: <Soccer /> }],
   },
 };
 
@@ -147,4 +150,5 @@ const ItemWrapper = styled.div`
   padding: 8px;
   margin: 8px 0;
   background-color: ${({ $isDragging }) => ($isDragging ? "#d3f9d8" : "white")};
+  /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
 `;

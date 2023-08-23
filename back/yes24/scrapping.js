@@ -68,10 +68,10 @@ async function scrapeYes24() {
     // 순위를 기준으로 데이터를 찾아 업데이트하거나, 없으면 새로 추가합니다.
     await Book.findOneAndUpdate(filter, update, options);
   }
-  console.log("Data saved or updated successfully!");
+  console.log("YES24: Data saved or updated successfully!");
 }
 
 // 매일 오전 10시에 스크래핑 작업을 수행하는 스케줄을 설정합니다.
 cron.schedule("0 10 * * *", scrapeYes24);
 
-module.exports = scrapeYes24;
+module.exports = { Book, scrapeYes24 };

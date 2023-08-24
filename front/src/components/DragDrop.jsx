@@ -5,6 +5,7 @@ import Weather from "./Weather";
 import Book from "./Book";
 import Cocktail from "./Cocktail";
 import Soccer from "./Soccer";
+import Movie from "./Movie";
 
 const initialSections = {
   "section-1": {
@@ -15,17 +16,20 @@ const initialSections = {
   "section-2": {
     id: "section-2",
     title: "Section 2",
-    items: [{ id: "item-2", content: <Weather /> }],
+    items: [{ id: "item-2", content: <Movie /> }],
   },
   "section-3": {
     id: "section-3",
     title: "Section 3",
-    items: [{ id: "item-3", content: <Cocktail /> }],
+    items: [
+      { id: "item-3", content: <Cocktail /> },
+      { id: "item-4", content: <Weather /> },
+    ],
   },
   "section-4": {
     id: "section-4",
     title: "Section 4",
-    items: [{ id: "item-4", content: <Soccer /> }],
+    items: [{ id: "item-5", content: <Soccer /> }],
   },
 };
 
@@ -103,7 +107,7 @@ const App = () => {
                 {...provided.droppableProps}
                 $isDraggingOver={snapshot.isDraggingOver}
               >
-                <h2>{section.title}</h2>
+                <h2 className="sr-only">{section.title}</h2>
                 {section.items.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
                     {(provided, snapshot) => (
@@ -133,7 +137,8 @@ export default App;
 const SectionWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  width: 100vw;
+  grid-template-rows: repeat(2, 1fr);
+  width: 100%;
   height: 100vh;
 `;
 
@@ -145,10 +150,13 @@ const Section = styled.div`
 `;
 
 const ItemWrapper = styled.div`
+  min-height: 10rem;
+  max-height: 45rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 8px;
   margin: 8px 0;
   background-color: ${({ $isDragging }) => ($isDragging ? "#d3f9d8" : "white")};
   /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
+  overflow-y: auto;
 `;

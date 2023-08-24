@@ -20,7 +20,7 @@ const soccerSchema = new mongoose.Schema(
 const Soccer = mongoose.model("Soccer", soccerSchema);
 
 // 축구 정보 스크래핑 및 DB 저장
-async function scrapeAndSaveData() {
+async function scrapeAndSaveSoccerData() {
   try {
     const data = await scrapeData(); // 스크랩한 데이터 얻기
 
@@ -91,4 +91,4 @@ async function scrapeData() {
   return data;
 }
 
-module.exports = { Soccer, scrapeAndSaveData };
+module.exports = { Soccer, scrapeAndSaveSoccerData };

@@ -11,26 +11,33 @@ const initialSections = {
   "section-1": {
     id: "section-1",
     title: "Section 1",
-    items: [{ id: "item-1", content: <Book /> }],
+    items: [
+      { id: "item-1", content: <Weather /> },
+      { id: "item-2", content: <Cocktail /> },
+      { id: "item-3", content: <Book /> },
+    ],
   },
   "section-2": {
     id: "section-2",
     title: "Section 2",
-    items: [{ id: "item-2", content: <Movie /> }],
-  },
-  "section-3": {
-    id: "section-3",
-    title: "Section 3",
     items: [
-      { id: "item-3", content: <Cocktail /> },
-      { id: "item-4", content: <Weather /> },
+      { id: "item-4", content: <Movie /> },
+      { id: "item-5", content: <Soccer /> },
     ],
   },
-  "section-4": {
-    id: "section-4",
-    title: "Section 4",
-    items: [{ id: "item-5", content: <Soccer /> }],
-  },
+  // "section-3": {
+  //   id: "section-3",
+  //   title: "Section 3",
+  //   items: [
+  //     { id: "item-3", content: <Cocktail /> },
+  //     { id: "item-4", content: <Weather /> },
+  //   ],
+  // },
+  // "section-4": {
+  //   id: "section-4",
+  //   title: "Section 4",
+  //   items: [{ id: "item-5", content: <Soccer /> }],
+  // },
 };
 
 const App = () => {
@@ -136,17 +143,19 @@ export default App;
 
 const SectionWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
+  /* grid-template-rows: repeat(2, 1fr); */
   width: 100%;
   height: 100vh;
 `;
 
 const Section = styled.div`
-  padding: 8px;
-  border: 1px solid #ccc;
+  width: 100%;
+  padding: 1rem 1rem;
+  /* border: 1px solid #ccc; */
   background-color: ${({ $isDraggingOver }) =>
     $isDraggingOver ? "#f3f3f3" : "white"};
+  background-color: #292929;
 `;
 
 const ItemWrapper = styled.div`
@@ -154,9 +163,10 @@ const ItemWrapper = styled.div`
   max-height: 45rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 8px;
-  margin: 8px 0;
+  padding: 1rem;
+  margin: 2rem 0;
   background-color: ${({ $isDragging }) => ($isDragging ? "#d3f9d8" : "white")};
   /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
   overflow-y: auto;
+  overflow-x: auto;
 `;

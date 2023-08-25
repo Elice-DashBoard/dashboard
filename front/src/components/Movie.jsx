@@ -5,7 +5,6 @@ import { styled } from "styled-components";
 
 const Movie = () => {
   const [movieList, setMovieList] = useState([]);
-  const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
     API(`${ENDPOINT.MOVIE}`, "GET")
@@ -15,44 +14,31 @@ const Movie = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleNextSlide = () => {
-    setCurrentSlide(
-      (prevSlide) => (prevSlide + 1) % Math.ceil(movieList.length / 2)
-    );
-  };
-
-  const handlePrevSlide = () => {
-    setCurrentSlide((prevSlide) =>
-      prevSlide === 0 ? Math.ceil(movieList.length / 2) - 1 : prevSlide - 1
-    );
-  };
-
-  const renderMoviesInSlide = (startIndex) => {
-    return movieList.slice(startIndex, startIndex + 2).map((movie) => (
-      <SlideMovie key={movie._id}>
-        <MovieRank>{movie.rank}</MovieRank>
-        <MovieImg
-          src={movie.img}
-          alt={`${movie.title}의 포스터입니다.`}
-          onClick={() => {
-            console.log("클릭!");
-          }}
-        />
-        <MovieTitle className="ellipsis">{movie.title}</MovieTitle>
-      </SlideMovie>
-    ));
+  // 마우스 휠 이벤트 핸들러
+  const handleMouseWheel = (event) => {
+    const container = document.getElementById("movieCarousel");
+    const delta = Math.sign(event.deltaY);
+    container.scrollLeft += delta * 100; // 스크롤 속도 조절
   };
 
   return (
     <>
-      <MovieCarousel>
-        <ControlButton onClick={handlePrevSlide} className="prev">
-          ◀
-        </ControlButton>
-        {movieList.length > 0 && <>{renderMoviesInSlide(currentSlide * 2)}</>}
-        <ControlButton onClick={handleNextSlide} className="next">
-          ▶
-        </ControlButton>
+      <MovieCarousel id="movieCarousel" onWheel={handleMouseWheel}>
+        {movieList.map((movie, index) => (
+          <SlideMovie key={movie._id}>
+            <MovieImg
+              src={movie.img}
+              alt={`${movie.title}의 포스터입니다.`}
+              onClick={() => {
+                console.log("클릭!");
+              }}
+            />
+            <ImgCover>
+              <MovieRank>{movie.rank}</MovieRank>
+            </ImgCover>
+            <MovieTitle className="ellipsis">{movie.title}</MovieTitle>
+          </SlideMovie>
+        ))}
       </MovieCarousel>
     </>
   );
@@ -63,53 +49,65 @@ export default Movie;
 const MovieCarousel = styled.div`
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 0;
   gap: 1rem;
   position: relative;
-`;
+  overflow-x: scroll;
 
-const ControlButton = styled.button`
-  position: absolute;
-  color: #7353ea;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: var(--fs-xl);
-  cursor: pointer;
-
-  &.prev {
-    left: 0;
+  &::-webkit-scrollbar {
+    width: 3rem;
   }
-
-  &.next {
-    right: 0;
+  &::-webkit-scrollbar-thumb {
+    background: #ff6f61;
+    border: 3.5px solid white;
+    border-radius: 2.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    /* background: transparent; */
   }
 `;
 
 const SlideMovie = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  width: 100%;
   background: #f4f4f4;
   border-radius: 1rem;
-  padding: 0.4rem;
+  padding: 0 0.4rem;
 `;
 
 const MovieRank = styled.span`
-  font-size: var(--fs-sm);
+  font-size: var(--fs-md);
   font-weight: 700;
-  color: #7353ea;
+  /* color: #7353ea; */
+  position: absolute;
+  left: 1rem;
+  top: 0.6rem;
+  color: #ffffff;
+
+  /* -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke: 1px black; */
 `;
 
 const MovieImg = styled.img`
   width: 20rem;
   height: 30rem;
+  border-radius: 1rem;
 `;
 
 const MovieTitle = styled.p`
   font-size: var(--fs-sm);
   font-weight: 700;
   text-align: center;
+  width: 100%;
+  line-height: 3rem;
+`;
+
+const ImgCover = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 1rem;
+  background: linear-gradient(rgb(60, 60, 60) 0%, rgba(60, 60, 60, 0) 20%);
 `;

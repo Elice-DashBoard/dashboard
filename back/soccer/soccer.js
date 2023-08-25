@@ -11,9 +11,17 @@ mongoose.connect("mongodb://127.0.0.1:27017/dashboard", {
 // MongoDB에 저장할 축구 정보의 스키마를 정의
 const soccerSchema = new mongoose.Schema(
   {
-    rank: String,
+    rank: Number,
     emblem: String,
     name: String,
+    matchesPlayed: Number,
+    wins: Number,
+    draws: Number,
+    losses: Number,
+    goalsFor: Number,
+    goalsAgainst: Number,
+    goalDifference: Number,
+    points: Number,
   },
   { collection: "soccer" }
 );
@@ -31,6 +39,14 @@ async function scrapeAndSaveSoccerData() {
         {
           $set: {
             rank: item.rank,
+            matchesPlayed: item.matchesPlayed,
+            wins: item.wins,
+            draws: item.draws,
+            losses: item.losses,
+            goalsFor: item.goalsFor,
+            goalsAgainst: item.goalsAgainst,
+            goalDifference: item.goalDifference,
+            points: item.points,
           },
         },
         { upsert: true, new: true } // 데이터가 없으면 새로 생성, 업데이트 후 업데이트된 데이터 반환
@@ -80,8 +96,29 @@ async function scrapeData() {
     const emblem = $(list).find("td.td_name > a > div > img").attr("src");
     const name = $(list).find("td.td_name > a > span").text();
 
+    const matchesPlayed = $(list).find("td:nth-child(3)").text();
+    const wins = $(list).find("td:nth-child(4)").text();
+    const draws = $(list).find("td:nth-child(5)").text();
+    const losses = $(list).find("td:nth-child(6)").text();
+    const goalsFor = $(list).find("td:nth-child(7)").text();
+    const goalsAgainst = $(list).find("td:nth-child(8)").text();
+    const goalDifference = $(list).find("td:nth-child(9)").text();
+    const points = $(list).find("td:nth-child(10)").text();
+
     // 데이터를 배열에 추가
-    data.push({ rank, emblem, name });
+    data.push({
+      rank,
+      emblem,
+      name,
+      matchesPlayed,
+      wins,
+      draws,
+      losses,
+      goalsFor,
+      goalsAgainst,
+      goalDifference,
+      points,
+    });
   });
   // 브라우저를 종료
   browser.close();

@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
-const { Book, scrapeYes24 } = require("./yes24/scrapping"); // YES24 스크래핑 함수
-const { Cocktail, saveCocktailToDB } = require("./cocktail/cocktail"); // 칵테일 정보 저장 함수
+const { Book, scrapeYes24 } = require("./yes24/scrapping");
+const { Cocktail, saveCocktailToDB } = require("./cocktail/cocktail");
 const { Soccer, scrapeAndSaveSoccerData } = require("./soccer/soccer");
 const { Movie, scrapeAndSaveMovieData } = require("./movie/movie");
 

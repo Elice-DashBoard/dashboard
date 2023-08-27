@@ -9,7 +9,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/dashboard", {
 
 // MongoDB에 저장할 축구 정보의 스키마를 정의
 const movieSchema = new mongoose.Schema({
-  rank: String,
+  rank: Number,
   title: String,
   distributor: String,
   img: String,
@@ -20,7 +20,6 @@ const Movie = mongoose.model("Movie", movieSchema);
 async function scrapeAndSaveMovieData() {
   try {
     const data = await scrapeData(); // 스크랩한 데이터 얻기
-    console.log(data);
 
     // 새로운 데이터 업데이트 또는 추가
     for (const item of data) {
@@ -73,7 +72,7 @@ const scrapeData = async () => {
           link: cells[2].querySelector("a").href, // 영화 제목 링크
         };
       });
-    console.log(extractedData);
+
     return extractedData;
   });
 
@@ -82,8 +81,6 @@ const scrapeData = async () => {
     const posterImgSrc = await page.$eval("#poster img", (img) => img.src); // poster ID의 img src 가져오기
     movie.posterImgSrc = posterImgSrc; // 가져온 img src를 객체에 추가
   }
-
-  console.log(data); // 최종 결과 출력
 
   await browser.close();
   return data;

@@ -20,17 +20,17 @@ const Soccer = () => {
       <Table>
         <thead>
           <tr>
-            <th id="th">순위</th>
-            <th id="th">팀</th>
+            <th className="th">순위</th>
+            <th className="th">팀</th>
             <th></th>
-            <th id="th">경기</th>
-            <th id="th">승</th>
-            <th id="th">무</th>
-            <th id="th">패</th>
-            <th id="th">득점</th>
-            <th id="th">실점</th>
-            <th id="th">득실차</th>
-            <th id="th">승점</th>
+            <th className="th">경기</th>
+            <th className="th">승</th>
+            <th className="th">무</th>
+            <th className="th">패</th>
+            <th className="th">득점</th>
+            <th className="th">실점</th>
+            <th className="th">득실차</th>
+            <th className="th">승점</th>
           </tr>
         </thead>
         <tbody>
@@ -69,19 +69,21 @@ const Soccer = () => {
 export default Soccer;
 
 const LayoutContainer = styled.div`
+  display: flex;
   height: 30rem;
   overflow-y: scroll;
   padding-right: 1rem;
 
   &::-webkit-scrollbar {
     width: 1rem;
+    height: 1rem;
   }
   &::-webkit-scrollbar-thumb {
     background: #ff6f61;
     border-radius: 2.5rem;
   }
   &::-webkit-scrollbar-track {
-    /* background: transparent; */
+    /* background: red; */
   }
 `;
 
@@ -110,7 +112,7 @@ const Table = styled.table`
     position: sticky;
     top: 0;
 
-    &#th {
+    &.th {
       width: 4rem;
       white-space: nowrap;
     }

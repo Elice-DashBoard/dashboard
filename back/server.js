@@ -38,9 +38,11 @@ app.get("/books", async (req, res) => {
 // 저장된 칵테일 정보를 반환하는 API
 app.get("/cocktails", async (req, res) => {
   try {
-    // 모든 칵테일 데이터를 가져옵니다.
-    const cocktails = await Cocktail.find();
-    res.json(cocktails);
+    // // MongoDB의 aggregate를 사용하여 랜덤 샘플링
+    const cocktails = await Cocktail.aggregate([{ $sample: { size: 1 } }]);
+
+    const randomCocktail = cocktails;
+    res.json(randomCocktail);
   } catch (error) {
     console.log(error);
     res.status(500).send("Server Error");
@@ -51,7 +53,7 @@ app.get("/cocktails", async (req, res) => {
 app.get("/soccer", async (req, res) => {
   try {
     // 모든 축구 데이터를 가져옵니다.
-    const soccer = await Soccer.find();
+    const soccer = await Soccer.find().sort({ rank: 1, points: 1 });
     res.json(soccer);
   } catch (error) {
     console.log(error);
@@ -63,7 +65,7 @@ app.get("/soccer", async (req, res) => {
 app.get("/movie", async (req, res) => {
   try {
     // 모든 축구 데이터를 가져옵니다.
-    const movie = await Movie.find();
+    const movie = await Movie.find().sort({ rank: 1 });
     res.json(movie);
   } catch (error) {
     console.log(error);

@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const cron = require('node-cron');
 const mongoose = require("mongoose");
 
 // MongoDB 연결 설정
@@ -91,6 +92,6 @@ const scrapeData = async () => {
   return data;
 };
 
-
+cron.schedule('0 9 * * 0', scrapeAndSaveMovieData);
 
 module.exports = { Movie, scrapeAndSaveMovieData };

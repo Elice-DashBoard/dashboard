@@ -91,4 +91,6 @@ const scrapeData = async () => {
   return data;
 };
 
+
+
 module.exports = { Movie, scrapeAndSaveMovieData };

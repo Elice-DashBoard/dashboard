@@ -1,4 +1,5 @@
-const { chromium } = require("playwright");
+const puppeteer = require("puppeteer");
+const cron = require('node-cron');
 const mongoose = require("mongoose");
 
 // MongoDB 연결 설정
@@ -44,7 +45,7 @@ async function scrapeAndSaveMovieData() {
 }
 
 const scrapeData = async () => {
-  const browser = await chromium.launch();
+  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto("https://www.the-numbers.com/weekly-box-office-chart");
 
@@ -76,14 +77,21 @@ const scrapeData = async () => {
     return extractedData;
   });
 
-  for (const movie of data) {
-    await page.goto(movie.link); // 각 링크로 이동
-    const posterImgSrc = await page.$eval("#poster img", (img) => img.src); // poster ID의 img src 가져오기
+  const fetchImageLinks = data.map(async (movie) => {
+    const newPage = await browser.newPage();
+    await newPage.goto(movie.link); // 각 링크로 이동
+    const posterImgSrc = await newPage.$eval("#poster img", (img) => img.src); // poster ID의 img src 가져오기
     movie.posterImgSrc = posterImgSrc; // 가져온 img src를 객체에 추가
-  }
+    await newPage.close(); // 페이지 닫기
+  });
+
+  // 병렬적으로 이미지 링크들을 가져옴
+  await Promise.all(fetchImageLinks);
 
   await browser.close();
   return data;
 };
+
+cron.schedule('0 9 * * 0', scrapeAndSaveMovieData);
 
 module.exports = { Movie, scrapeAndSaveMovieData };

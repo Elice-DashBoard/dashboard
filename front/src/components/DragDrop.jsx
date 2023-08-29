@@ -146,7 +146,7 @@ const SectionWrapper = styled.div`
   grid-template-columns: repeat(2, 50%);
   /* grid-template-rows: repeat(2, 1fr); */
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
 
 const Section = styled.div`

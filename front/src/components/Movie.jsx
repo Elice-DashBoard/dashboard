@@ -55,11 +55,10 @@ const MovieCarousel = styled.div`
   overflow-x: scroll;
 
   &::-webkit-scrollbar {
-    width: 3rem;
+    height: 1rem;
   }
   &::-webkit-scrollbar-thumb {
     background: #ff6f61;
-    border: 3.5px solid white;
     border-radius: 2.5rem;
   }
   &::-webkit-scrollbar-track {

@@ -71,7 +71,7 @@ const Table = styled.table`
 
   th,
   td {
-    padding: 0.5rem;
+    padding: 0.5rem 0;
     border-bottom: 1px solid #ccc;
     text-align: center;
     vertical-align: middle;

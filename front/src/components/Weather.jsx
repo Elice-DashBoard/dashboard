@@ -97,14 +97,27 @@ export default Weather;
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
   gap: 1rem;
+
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ff6f61;
+    border-radius: 2.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    /* background: transparent; */
+  }
 `;
 
 const WeatherInfoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+  margin: 0 auto;
 `;
 
 const WeatherDescContainer = styled.div`

@@ -25,19 +25,6 @@ const initialSections = {
       { id: "item-5", content: <Soccer /> },
     ],
   },
-  // "section-3": {
-  //   id: "section-3",
-  //   title: "Section 3",
-  //   items: [
-  //     { id: "item-3", content: <Cocktail /> },
-  //     { id: "item-4", content: <Weather /> },
-  //   ],
-  // },
-  // "section-4": {
-  //   id: "section-4",
-  //   title: "Section 4",
-  //   items: [{ id: "item-5", content: <Soccer /> }],
-  // },
 };
 
 const App = () => {
@@ -123,6 +110,7 @@ const App = () => {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         $isDragging={snapshot.isDragging}
+                        $isLastItem={index === section.items.length - 1}
                       >
                         {item.content}
                       </ItemWrapper>
@@ -144,15 +132,17 @@ export default App;
 const SectionWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 50%);
-  /* grid-template-rows: repeat(2, 1fr); */
   width: 100%;
   height: 100%;
+
+  @media (max-width: 50rem) {
+    grid-template-columns: repeat(1, 100%);
+  }
 `;
 
 const Section = styled.div`
   width: 100%;
   padding: 1rem 1rem;
-  /* border: 1px solid #ccc; */
   background-color: ${({ $isDraggingOver }) =>
     $isDraggingOver ? "#f3f3f3" : "white"};
   background-color: #292929;
@@ -164,9 +154,9 @@ const ItemWrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 1rem;
-  margin: 2rem 0;
+  margin-bottom: ${({ $isLastItem }) => ($isLastItem ? "0" : "2rem")};
   background-color: ${({ $isDragging }) => ($isDragging ? "#d3f9d8" : "white")};
-  /* box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
   overflow-x: auto;
 `;

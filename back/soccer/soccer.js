@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const puppeteer = require("puppeteer");
 const cheerio = require("cheerio");
+const cron = require("node-cron");
 
 // MongoDB 연결 설정
 mongoose.connect("mongodb://127.0.0.1:27017/dashboard", {
@@ -127,5 +128,10 @@ async function scrapeData() {
 
   return data;
 }
+// 매일 00:00 시와 12:00 시에 스크래핑 작업 실행
+cron.schedule("0 0,12 * * *", async () => {
+  // 스크래핑 및 데이터 저장 함수 호출
+  await scrapeAndSaveSoccerData();
+});
 
 module.exports = { Soccer, scrapeAndSaveSoccerData };

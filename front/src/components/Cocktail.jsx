@@ -66,7 +66,19 @@ const CocktailUl = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
   overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    height: 1rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #ff6f61;
+    border-radius: 2.5rem;
+  }
+  &::-webkit-scrollbar-track {
+    /* background: transparent; */
+  }
 `;
 
 const InfoUl = styled.ul`
@@ -107,6 +119,7 @@ const Li = styled.li`
 
   & > strong.highlight {
     color: #ff6f61;
+    font-weight: 700;
   }
 
   & > strong.bold {

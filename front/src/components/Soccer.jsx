@@ -5,7 +5,6 @@ import styled from "styled-components";
 
 const Soccer = () => {
   const [soccer, setSoccer] = useState([]);
-  // console.table(soccer);
 
   useEffect(() => {
     API(`${ENDPOINT.SOCCER}`, "GET")

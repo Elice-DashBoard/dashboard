@@ -21,8 +21,6 @@ const Weather = () => {
   const { latitude, longitude, error } = useGeolocation();
   const [selectedLocation, setSelectedLocation] = useState("Current Location");
   const [weather, setWeather] = useState(null);
-  console.log(weather);
-  // console.table(cities);
 
   useEffect(() => {
     const location =

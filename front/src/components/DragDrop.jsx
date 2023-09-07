@@ -29,10 +29,8 @@ const initialSections = {
 
 const App = () => {
   const [sections, setSections] = useState(initialSections);
-  console.log(sections);
 
   const onDragEnd = (result) => {
-    console.log(result);
     const { source, destination } = result;
 
     // 만약 드롭 위치가 없을 경우 (드롭 영역 밖으로 놓을 때)

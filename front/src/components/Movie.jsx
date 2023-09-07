@@ -14,13 +14,6 @@ const Movie = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  // 마우스 휠 이벤트 핸들러
-  const handleMouseWheel = (event) => {
-    const container = document.getElementById("movieCarousel");
-    const delta = Math.sign(event.deltaY);
-    container.scrollLeft += delta * 100; // 스크롤 속도 조절
-  };
-
   return (
     <>
       <MovieCarousel id="movieCarousel" onWheel={handleMouseWheel}>
@@ -29,9 +22,6 @@ const Movie = () => {
             <MovieImg
               src={movie.img}
               alt={`${movie.title}의 포스터입니다.`}
-              onClick={() => {
-                console.log("클릭!");
-              }}
             />
             <ImgCover>
               <MovieRank>{movie.rank}</MovieRank>

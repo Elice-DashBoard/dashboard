@@ -5,7 +5,6 @@ import { styled } from "styled-components";
 
 const Cocktail = () => {
   const [cocktails, setCocktails] = useState([]);
-  // console.table(cocktails);
 
   useEffect(() => {
     API(`${ENDPOINT.COCKTAILS}`, "GET")

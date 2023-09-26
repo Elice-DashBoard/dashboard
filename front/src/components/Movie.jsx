@@ -16,7 +16,7 @@ const Movie = () => {
 
   return (
     <>
-      <MovieCarousel id="movieCarousel" onWheel={handleMouseWheel}>
+      <MovieCarousel id="movieCarousel">
         {movieList.map((movie, index) => (
           <SlideMovie key={movie._id}>
             <MovieImg
